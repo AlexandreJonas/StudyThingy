@@ -19,18 +19,32 @@ export const YoutubeForm = () => {
 
     return(
         <div>
-            <form onSubmit={handleSubmit(idk)}>
+            <form onSubmit={handleSubmit(idk)} noValidate>
                 {/* <label htmlFor="username">Username</label>
                 <input type="text" id="username" name={name} ref={ref} onChange={onChange} onBlur={onBlur}></input> */}
 
                 <label htmlFor="username">Username</label>
-                <input type="text" id="username" {...register("username")}></input>
+                <input type="text" id="username" {...register("username", {
+                    required: {
+                        value: true,
+                        message: "Username is required"
+                    } 
+                })}></input>
 
                 <label htmlFor="email">Email</label>
-                <input type="email" id="email" {...register("email")}></input>
+                <input type="email" id="email" {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                        value:  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                        message: "Invalid Email format"
+                        
+                    }
+                })}></input>
 
                 <label htmlFor="channel">Channel</label>
-                <input type="text" id="channel" {...register("channel")}></input>
+                <input type="text" id="channel" {...register("channel", {
+                    required: "Channel is required"
+                })}></input>
 
                 <button>Submit</button>
             </form>
