@@ -13,6 +13,17 @@ export const YoutubeForm = () => {
     const {register, control, handleSubmit} = form
     // const {name, ref, onChange, onBlur} = register("username")
 
+    const registerOptionsTest = {
+        required: {
+            value: true,
+            message: "Channel is required akshually"
+        },
+        pattern: {
+            value: /(?=(.*\d){2})/,
+            message: "Invalid Channel format. At least two numbers are required"
+        }
+    }
+
     const idk = (data: FormValues) => {
         console.log("Form Submitted!", data)
     }
@@ -42,9 +53,7 @@ export const YoutubeForm = () => {
                 })}></input>
 
                 <label htmlFor="channel">Channel</label>
-                <input type="text" id="channel" {...register("channel", {
-                    required: "Channel is required"
-                })}></input>
+                <input type="text" id="channel" {...register("channel", registerOptionsTest)}></input>
 
                 <button>Submit</button>
             </form>
