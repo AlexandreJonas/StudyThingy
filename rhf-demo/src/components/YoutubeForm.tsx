@@ -5,6 +5,7 @@ type FormValues = {
     username: string
     email: string
     channel: string
+    channelDescription: string
 }
 
 export const YoutubeForm = () => {
@@ -12,9 +13,12 @@ export const YoutubeForm = () => {
     const form = useForm<FormValues>()
     const { register, control, handleSubmit, formState } = form
     const { errors } = formState
+
+    //Register returns an object containing the following objects:
     // const {name, ref, onChange, onBlur} = register("username")
 
-    const registerOptionsTest = {
+    // You can also create an object for just the register options for better readability
+    const channelRegisterOptionsTest = {
         required: {
             value: true,
             message: "Channel is required akshually"
@@ -25,6 +29,11 @@ export const YoutubeForm = () => {
         }
     }
 
+    // In turn, it's also possible to create an object for the 'register' function as a whole for one field
+    const channelDescriptionRegisterTest = register("channelDescription", {
+        required: "Channel Description is required",
+    })
+
     const idk = (data: FormValues) => {
         console.log("Form Submitted!", data)
     }
@@ -32,9 +41,12 @@ export const YoutubeForm = () => {
     return (
         <div>
             <form onSubmit={handleSubmit(idk)} noValidate>
+
+                {/* Putting the 'register' object on the input is basically the same thing as below: */}
                 {/* <label htmlFor="username">Username</label>
                 <input type="text" id="username" name={name} ref={ref} onChange={onChange} onBlur={onBlur}></input> */}
 
+                    {/* Standard example with the required function */}
                 <div className="form-control">
                     <label htmlFor="username">Username</label>
                     <input type="text" id="username" {...register("username", {
@@ -46,7 +58,7 @@ export const YoutubeForm = () => {
                     <p className="error">{errors.username?.message}</p>
                 </div>
 
-
+                    {/* Example with the required and pattern validation */}
                 <div className="form-control">
                     <label htmlFor="email">Email</label>
                     <input type="email" id="email" {...register("email", {
@@ -60,10 +72,18 @@ export const YoutubeForm = () => {
                     <p className="error">{errors.email?.message}</p>
                 </div>
 
+                    {/* Example with an object created just for the registerOptions for better readability */}
                 <div className="form-control">
                     <label htmlFor="channel">Channel</label>
-                    <input type="text" id="channel" {...register("channel", registerOptionsTest)}></input>
+                    <input type="text" id="channel" {...register("channel", channelRegisterOptionsTest)}></input>
                     <p className="error">{errors.channel?.message}</p>
+                </div>
+
+                    {/* Example with an object specifically to register the channelDescription field, including its registerOptions */}
+                <div className="form-control">
+                    <label htmlFor="channelDescription">Channel Description</label>
+                    <input type="text" id="channelDescription" {...channelDescriptionRegisterTest}></input>
+                    <p className="error">{errors.channelDescription?.message}</p>
                 </div>
 
                 <button>Submit</button>
