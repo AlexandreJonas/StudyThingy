@@ -46,19 +46,27 @@ export const YoutubeForm = () => {
                 {/* <label htmlFor="username">Username</label>
                 <input type="text" id="username" name={name} ref={ref} onChange={onChange} onBlur={onBlur}></input> */}
 
-                    {/* Standard example with the required function */}
+                {/* Standard example with the required function */}
                 <div className="form-control">
                     <label htmlFor="username">Username</label>
                     <input type="text" id="username" {...register("username", {
                         required: {
                             value: true,
                             message: "Username is required"
+                        },
+                        validate: (fieldValue) => {
+
+                            if (fieldValue === "admin") {
+                                return "Enter a different username"
+                            }
+                            return true
+
                         }
                     })}></input>
                     <p className="error">{errors.username?.message}</p>
                 </div>
 
-                    {/* Example with the required and pattern validation */}
+                {/* Example with the required and pattern validation */}
                 <div className="form-control">
                     <label htmlFor="email">Email</label>
                     <input type="email" id="email" {...register("email", {
@@ -66,20 +74,29 @@ export const YoutubeForm = () => {
                         pattern: {
                             value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
                             message: "Invalid Email format"
-
+                        },
+                        validate : {
+                            notAdmin: (fieldValue) => {
+                                return (
+                                    fieldValue !== "admin@example.com" || "Enter a different email address"
+                                )
+                            },
+                            notBlacklisted: (fieldValue) => {
+                                return !fieldValue.endsWith("baddomain.com") || "This domain is not supported"
+                            }
                         }
                     })}></input>
                     <p className="error">{errors.email?.message}</p>
                 </div>
 
-                    {/* Example with an object created just for the registerOptions for better readability */}
+                {/* Example with an object created just for the registerOptions for better readability */}
                 <div className="form-control">
                     <label htmlFor="channel">Channel</label>
                     <input type="text" id="channel" {...register("channel", channelRegisterOptionsTest)}></input>
                     <p className="error">{errors.channel?.message}</p>
                 </div>
 
-                    {/* Example with an object specifically to register the channelDescription field, including its registerOptions */}
+                {/* Example with an object specifically to register the channelDescription field, including its registerOptions */}
                 <div className="form-control">
                     <label htmlFor="channelDescription">Channel Description</label>
                     <input type="text" id="channelDescription" {...channelDescriptionRegisterTest}></input>
