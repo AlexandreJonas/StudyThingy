@@ -17,22 +17,22 @@ function App() {
 //   ],
 // ]
 
-  // const idk = [
+  const idk = [
                 
-  //     [
-  //         -45.51313686727258,
-  //         -22.943924476033715
-  //     ],
-  //     [
-  //         -45.51021288891366,
-  //         -22.938418193344887
-  //     ],
-  //     [
-  //         -45.504575803430555,
-  //         -22.936958280700026
-  //     ]
+      [
+          -45.51313686727258,
+          -22.943924476033715
+      ],
+      [
+          -45.51021288891366,
+          -22.938418193344887
+      ],
+      [
+          -45.504575803430555,
+          -22.936958280700026
+      ]
                 
-  // ]
+  ]
 
 const invertedIDK = [
       [
@@ -333,6 +333,10 @@ const revertCoordinates = (coordinateAray) => {
 
 const lul = revertCoordinates(mockedData)
 
+const polygonArrayTest = []
+polygonArrayTest.push(idk)
+polygonArrayTest.push(mockedData)
+
   return (
     <>
       <MapContainer center={[-22.943924476033715, -45.51313686727258]} zoom={13} scrollWheelZoom={false}>
@@ -346,8 +350,9 @@ const lul = revertCoordinates(mockedData)
           </Popup>
         </Marker>
 
-        <Polygon pathOptions={purpleOptions} positions={invertedIDK} />
-        <Polygon pathOptions={purpleOptions} positions={mockedData} />
+        {/* <Polygon pathOptions={purpleOptions} positions={invertedIDK} />
+        <Polygon pathOptions={purpleOptions} positions={mockedData} /> */}
+        {polygonArrayTest.map(p => <Polygon pathOptions={purpleOptions} positions={p} />)}
       </MapContainer>
     </>
   )
